@@ -19,7 +19,7 @@ public class DBHelper {
         try {
             connection = DBUtil.getConnection();
             connection.prepareStatement("SET @@foreign_key_checks = 0").executeUpdate();
-            rs = connection.prepareStatement("SELECT TABLE_NAME FROM information.schema.tables WHERE TABLE_SCHEMA = 'schooldb'").executeQuery();
+            rs = connection.prepareStatement("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'schooldb'").executeQuery();
             List<String> tables = mapRsToList(rs);
 
             for (String table : tables) {
