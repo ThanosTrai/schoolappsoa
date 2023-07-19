@@ -104,9 +104,12 @@ public class TeachersInsertForm extends JFrame {
 
 					// Validate
 					teacherErrors = TeacherValidator.validate(dto);
+
+					String firstnameMessage = (teacherErrors.get("firstname") != null) ? "Firstname: " + teacherErrors.get("firstname") : "";
+					String lastnameMessage = (teacherErrors.get("lastname") != null) ? "Lastname: " + teacherErrors.get("lastname") : "";
+
 					if (!teacherErrors.isEmpty()) {
-						JOptionPane.showMessageDialog(null, "Firstname: " + teacherErrors.get("firstname") + " Lastname: "
-								+ teacherErrors.get("lastname"), "Validation Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, firstnameMessage + " " + lastnameMessage, "Validation Error", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 
