@@ -45,6 +45,41 @@ class TeacherDAOTest {
 
     }
 
+    @Test
+    void update() throws  TeacherDAOException {
+        Teacher teacher = new Teacher();
+        teacher.setId(2);
+        teacher.setFirstname("Anna2");
+        teacher.setLastname("Kefala2");
+        teacherDAO.update(teacher);
+
+        List<Teacher> teachers = teacherDAO.getByLastname(teacher.getLastname());
+        assertEquals(teachers.get(0).getFirstname(), "Anna2");
+    }
+
+    @Test
+    void delete() throws TeacherDAOException {
+        int id = 1;
+        teacherDAO.delete(id);
+
+        Teacher teacher = teacherDAO.getById(1);
+        assertNull(teacher);
+    }
+
+    @Test
+    void getByLastname() throws TeacherDAOException {
+        List<Teacher> teachers = teacherDAO.getByLastname("Kape");
+        assertEquals(2, teachers.size());
+    }
+
+    @Test
+    void getById() throws TeacherDAOException {
+        int id = 4;
+        Teacher teacher = teacherDAO.getById(id);
+        assertNotNull(teacher);
+        assertEquals("Kapetidis", teacher.getLastname());
+    }
+
     public static void createDummyTeachers() throws TeacherDAOException {
         Teacher teacher = new Teacher();
         teacher.setFirstname("Athanasios");
@@ -63,7 +98,7 @@ class TeacherDAOTest {
 
         teacher = new Teacher();
         teacher.setFirstname("John");
-        teacher.setLastname("Papa");
+        teacher.setLastname("Kapetidis");
         teacherDAO.insert(teacher);
     }
 }

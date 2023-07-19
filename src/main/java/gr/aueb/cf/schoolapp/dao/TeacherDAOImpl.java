@@ -85,12 +85,12 @@ public class TeacherDAOImpl implements ITeacherDAO {
     public List<Teacher> getByLastname(String lastname) throws TeacherDAOException {
         String sql = "SELECT * FROM TEACHERS WHERE LASTNAME LIKE ?";
         List<Teacher> teachers = new ArrayList<>();
-        ResultSet rs = null;
 
         try (Connection connection = DBUtil.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            ps.setString(1, lastname);
+            ResultSet rs;
+            ps.setString(1, lastname + "%");
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -101,12 +101,6 @@ public class TeacherDAOImpl implements ITeacherDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new TeacherDAOException("SQL Error in Teacher search with lastname: " + lastname);
-        } finally {
-            try {
-                if (rs != null) rs.close();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
         }
         return teachers;
     }
